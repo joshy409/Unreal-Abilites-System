@@ -17,7 +17,7 @@ ACharacterBase::ACharacterBase()
 void ACharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	AttributeSetBaseComp->OnHealthChange.AddDynamic(this, &ACharacterBase::OnHealthChanged);
 }
 
 // Called every frame
@@ -47,5 +47,9 @@ void ACharacterBase::AquireAbility(TSubclassOf<UGameplayAbility> AbilitytoAquire
 		}
 		AbilitySystemComp->InitAbilityActorInfo(this, this);
 	}
+}
+
+void ACharacterBase::OnHealthChanged(float Health, float MaxHealth) {
+	BP_OnHealthChanged(Health, MaxHealth);
 }
 
